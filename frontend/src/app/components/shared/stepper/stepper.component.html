@@ -1,0 +1,74 @@
+<div class="stepper">
+  <div class="stepper-header">
+    <div
+      *ngFor="let step of steps; let i = index"
+      class="stepper-item"
+      [class.active]="i === currentStep"
+      (click)="goToStep(i)"
+    >
+      <div class="step-number">{{ i + 1 }}</div>
+      <div class="step-name">{{ step.name }}</div>
+    </div>
+  </div>
+
+  <div class="stepper-body">
+    <ng-container *ngIf="currentStep === 0">
+      <app-project-details
+        (stepperEvent)="catchEvent($event)"
+        (nextStep)="nextStep($event)"
+        [projectDetails]="cppsProject.details"
+        [mode]="mode"
+      ></app-project-details>
+    </ng-container>
+    <ng-container *ngIf="currentStep === 1">
+      <app-user-add-list
+        (stepperEvent)="catchEvent($event)"
+        (nextStep)="nextStep($event)"
+        [addedUsersList]="cppsProject.users"
+        [cppsProject]="cppsProject"
+        [mode]="mode"
+      ></app-user-add-list>
+    </ng-container>
+    <ng-container *ngIf="currentStep === 2 && !isDemoProject">
+      <app-common-workspace
+        [availableProjectUsers]="cppsProject.users"
+        [commonWorkspace]="cppsProject.commonWorkspace"
+        (nextStep)="nextStep($event)"
+        [mode]="mode"
+        [gitlabHasBeenInitiatedAlready]="
+          cppsProject.externalToolsDetails.gitlabHasBeenGenerated
+        "
+      ></app-common-workspace>
+    </ng-container>
+    <ng-container *ngIf="currentStep === 3 && !isDemoProject">
+      <app-domain-workspace-list
+        [availableProjectUsers]="cppsProject.users"
+        (nextStep)="nextStep($event)"
+        [domainWorkspaces]="cppsProject.domainWorkspaces"
+        [mode]="mode"
+        [commonWorkspaceUsers]="cppsProject.commonWorkspace.users"
+        [gitlabHasBeenInitiatedAlready]="
+          cppsProject.externalToolsDetails.gitlabHasBeenGenerated
+        "
+      ></app-domain-workspace-list>
+    </ng-container>
+    <ng-container
+      *ngIf="
+        (isDemoProject && currentStep === 2) ||
+        (!isDemoProject && currentStep === 4)
+      "
+    >
+      <app-external-tools-details
+        (nextStep)="nextStep($event)"
+        [externalToolsDetails]="cppsProject.externalToolsDetails"
+        [mode]="mode"
+        [isDemoProject]="isDemoProject"
+      ></app-external-tools-details>
+    </ng-container>
+    <ng-container *ngIf="isDemoProject && currentStep === 3">
+      <app-demo-project-config
+        (nextStep)="nextStep($event)"
+      ></app-demo-project-config>
+    </ng-container>
+  </div>
+</div>

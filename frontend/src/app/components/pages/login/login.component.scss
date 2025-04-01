@@ -1,0 +1,70 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.login-container {
+  display: flex;
+  height: 100vh;
+}
+
+.login-left {
+  width: 50%;
+  background-color: #f8f9fa; /* Light gray background for left side */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-right {
+  width: 50%;
+  background-color: #a9a9a9; /* Gray placeholder for right side */
+}
+
+.logo-placeholder {
+  width: 100px;
+  height: 100px;
+  background-color: #555; /* Temporary color for the logo */
+  margin-bottom: 20px;
+}
+
+.application-title {
+  font-weight: bold;
+}
+
+.welcome-message {
+  font-size: 32px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.logo-title-container {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between logo and title */
+  margin-bottom: 20px; /* Adjust this as needed */
+}
+
+.btn {
+  width: 60%;
+  margin-bottom: 10px;
+}
+
+.oauth-info {
+  margin-bottom: 30px;
+  text-align: center;
+  max-width: 70%;
+}
+
+.oauth-info span {
+  max-width: 60%;
+}
+
+.logo-title-welcome-container {
+  margin-bottom: 30%;
+}

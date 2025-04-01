@@ -1,0 +1,65 @@
+{
+  "name": "MDCPPS Project",
+  "description": "This is a description",
+  "version": "0.0.1",
+  "commonWorkspace": {
+    "name": "Common Workspace",
+    "users": ["22663820", "22663746", "22778983"]
+  },
+  "domainWorkspaces": [
+    {
+      "name": "Electrical engineering",
+      "users": ["22663855"]
+    },
+    {
+      "name": "Quality Engineering",
+      "users": ["22778983", "22663848"]
+    },
+    {
+      "name": "Mechanical Engineering",
+      "users": ["22663820", "22663746"]
+    }
+  ],
+  "users": [
+    {
+      "gitlabId": "22663855",
+      "gitlabUsername": "GeoffreyKarnbachTUWien5",
+      "email": "",
+      "isAdmin": false,
+      "isReviewer": false
+    },
+    {
+      "gitlabId": "22778983",
+      "gitlabUsername": "GeoffreyKarnbachTUWien2",
+      "email": "",
+      "isAdmin": true,
+      "isReviewer": true
+    },
+    {
+      "gitlabId": "22663820",
+      "gitlabUsername": "GeoffreyKarnbachTUWien3",
+      "email": "",
+      "isAdmin": false,
+      "isReviewer": true
+    },
+    {
+      "gitlabId": "22663848",
+      "gitlabUsername": "GeoffreyKarnbachTUWien4",
+      "email": "",
+      "isAdmin": false,
+      "isReviewer": false
+    },
+    {
+      "gitlabId": "22663746",
+      "gitlabUsername": "GeoffreyKarnbachTUWien",
+      "email": "geoffrey.karnbach@tuwien.ac.at",
+      "isAdmin": true,
+      "isReviewer": true
+    }
+  ],
+  "gitlab": {
+    "rootGroupId": 93581398,
+    "rootGroupName": "mdcpps",
+    "creatorUserId": 22663746
+  }
+}

@@ -1,0 +1,67 @@
+<!---
+<h1>LOGIN PAGE</h1>
+
+<p *ngIf="oauthUrlCalled">OAUTH URL:<br>{{oauthUrl}}</p>
+<p *ngIf="oauthUrlCalled">
+    <strong>THE URL HAS BEEN COPIED TO YOUR CLIPBOARD, PASTE IT IN A BROWSER!</strong>
+    <br>
+    <strong>ONCE YOU HAVE PASSED THE GITLAB LOGIN, CLICK THE LOGIN BUTTON BELOW</strong>
+</p>
+
+<button (click)="request_oauth_url()" *ngIf="!oauthUrlCalled">OAUTH</button>
+<button (click)="check_login_status()" *ngIf="oauthUrlCalled">LOGIN</button>
+-->
+
+<div class="login-container">
+  <!-- Left Side - Logo and Login Form -->
+  <div class="login-left">
+    <div class="logo-title-container">
+      <div class="logo">
+        <div class="logo-placeholder"></div>
+      </div>
+      <h1 class="application-title">MDCPPS-EPM</h1>
+    </div>
+
+    <h2 class="welcome-message">Welcome Back!</h2>
+
+    <br /><br /><br />
+
+    <div *ngIf="oauthUrlCalled" class="oauth-info">
+      <p style="word-break: break-all">
+        <strong>{{ oauthUrl }}</strong>
+      </p>
+      <span>
+        Please go to your browser and paste the GitLab authentication URL into
+        it.
+        <br />
+        Once you have passed the GitLab login, click the login button below
+      </span>
+    </div>
+
+    <button
+      class="btn btn-secondary"
+      (click)="request_oauth_url()"
+      *ngIf="!oauthUrlCalled"
+    >
+      <img
+        src="gitlab.svg"
+        alt="GitLab Logo"
+        class="gitlab-logo"
+        style="max-width: 30px; max-height: 30px; margin-right: 2em"
+      />
+      <strong>Log in with GitLab</strong>
+    </button>
+    <button
+      class="btn btn-secondary"
+      (click)="check_login_status()"
+      *ngIf="oauthUrlCalled"
+    >
+      Confirm
+    </button>
+  </div>
+
+  <!-- Right Side - Background color or image placeholder -->
+  <div class="login-right">
+    <!-- This will later hold an image -->
+  </div>
+</div>

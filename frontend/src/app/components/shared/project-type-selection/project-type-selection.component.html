@@ -1,0 +1,93 @@
+<div class="container" style="margin-top: 2em">
+  <h1 class="text-center">
+    <u>Select the project type</u>
+  </h1>
+  <br />
+  <div class="d-grid project-grid">
+    <div
+      class="col-md-5"
+      (click)="createCppsProject()"
+      style="cursor: pointer; width: 100%"
+    >
+      <div class="card shadow-sm p-3 mb-4 bg-white rounded">
+        <div class="row no-gutters">
+          <div class="col-md-3">
+            <img
+              src="project.png"
+              class="img-fluid"
+              alt="MD-CPPS Project Image"
+              style="max-width: 150px"
+            />
+          </div>
+          <div class="col-md-9">
+            <div class="card-body">
+              <h5 class="card-title">MD-CPPS PROJECT</h5>
+              <p class="card-text">
+                Create a project for a Multi-Domain Cyber Physical Production
+                System (MD-CPPS) involving multiple engineering disciplines. You
+                will be able to define your own Workspaces.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-md-5"
+      (click)="createDemoProject()"
+      style="cursor: pointer; width: 100%"
+    >
+      <div class="card shadow-sm p-3 mb-4 bg-white rounded">
+        <div class="row no-gutters">
+          <div class="col-md-3">
+            <img
+              src="demo.png"
+              class="img-fluid"
+              alt="Demo Project Image"
+              style="max-width: 150px"
+            />
+          </div>
+          <div class="col-md-9">
+            <div class="card-body">
+              <h5 class="card-title">DEMO PROJECT</h5>
+              <p class="card-text">
+                Create a demo project to explore the functionality and simulate
+                workflows for your use case. Sample data will be automatically
+                generated, once the user has provided details about the desired
+                outcome.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-md-5"
+      (click)="importProject()"
+      style="cursor: pointer; width: 100%"
+    >
+      <div class="card shadow-sm p-3 mb-4 bg-white rounded">
+        <div class="row no-gutters">
+          <div class="col-md-3">
+            <img
+              src="import.png"
+              class="img-fluid"
+              alt="MD-CPPS Project Image"
+              style="max-width: 150px"
+            />
+          </div>
+          <div class="col-md-9">
+            <div class="card-body">
+              <h5 class="card-title">Import a MD-CPPS PROJECT</h5>
+              <p class="card-text">
+                Import a project for a Multi-Domain Cyber Physical Production
+                System (MD-CPPS) involving multiple engineering disciplines
+                using a JSON file (exported from this tool).
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+html, body, .container-fluid, .row {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+.col-2 {
+    background-color: #a8a8a8; /* Optional background color */
+    height: 100vh; /* Full viewport height */
+}

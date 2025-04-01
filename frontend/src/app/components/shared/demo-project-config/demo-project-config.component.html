@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="form-group">
+    <label for="domainCount">Number of domain workspaces:</label>
+    <input
+      type="number"
+      id="domainCount"
+      name="domainCount"
+      class="form-control"
+      [(ngModel)]="domainCount"
+    />
+  </div>
+  <br />
+  <div style="display: flex; justify-content: center; margin-top: 1em">
+    <button class="btn btn-primary" (click)="save()" style="width: 35%">
+      <i class="bi-save"></i>
+      Save and build demo project
+    </button>
+  </div>
+</div>

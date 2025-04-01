@@ -1,0 +1,47 @@
+<div class="user-container">
+  <div class="user-info">
+    <img src="{{ user.avatarUrl }}" alt="avatar" />
+    <span
+      ><strong>{{ user.gitlabUsername }}</strong></span
+    >
+  </div>
+
+  <div class="navigation-items">
+    <button
+      type="button"
+      class="btn btn-secondary project-list-btn"
+      (click)="this.routingService.navigateToComponent('project-list', {})"
+    >
+      Project List
+    </button>
+  </div>
+
+  <div class="actions">
+    <!-- Logout button on the left -->
+    <button
+      type="button"
+      class="btn btn-secondary logout-btn"
+      (click)="logout()"
+    >
+      <i class="bi-box-arrow-left"></i>
+    </button>
+
+    <!-- Navigation buttons on the right -->
+    <div class="navigation-buttons">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="routingService.navigatePreviousComponent()"
+      >
+        &lt;
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="routingService.navigateNextComponent()"
+      >
+        &gt;
+      </button>
+    </div>
+  </div>
+</div>

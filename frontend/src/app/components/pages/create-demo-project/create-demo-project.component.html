@@ -1,0 +1,12 @@
+<div class="container" style="margin-top: 2em">
+  <h1 class="text-center">
+    <u>Create Demo Project</u>
+  </h1>
+  <br />
+  <app-stepper
+    [steps]="mySteps"
+    (stepperEvent)="catchEvent($event)"
+    [cppsProject]="cppsProject"
+    [isDemoProject]="true"
+  ></app-stepper>
+</div>

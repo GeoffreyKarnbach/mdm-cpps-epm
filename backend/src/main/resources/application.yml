@@ -1,0 +1,89 @@
+logging:
+  file.name: ./log/backend.log
+  level:
+    root: INFO
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: TRACE
+    at.ac.tuwien.sepm.groupphase.backend.aspect: DEBUG
+  pattern:
+    level: r=%X{r} ip=%X{ip} u=%X{u} %5p
+  aspect:
+    enabled: true
+    arg-string-length: 50
+
+spring:
+  main:
+    allow-circular-references: true
+  datasource:
+    url: jdbc:h2:file:./database/db;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: admin
+    password: password
+  jpa:
+    # Set this property to true if you want to see the executed queries
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    # Allows to fetch lazy properties outside of the original transaction. Although this sounds helpful, the property
+    # is disabled since it breaks the principle of least astonishment and leads to bad performance. To learn more,
+    # follow this link: https://bit.ly/2LaX9ku
+    open-in-view: false
+  security:
+    oauth2:
+      client:
+        registration:
+          gitlab:
+            client-id: b23fc5d0622f96cac437ca6ede5452111635f3261c5751e5986b0ade12a071df
+            client-secret: gloas-8b63b7a77a2a84bee0ff141e1b601506bf9504c27b0bf1cfd24f2d3618f03aa3
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/api/v1/auth/oauth/callback
+            scope: api
+            client-name: GitLab
+        provider:
+          gitlab:
+            user-info-uri: https://gitlab.com/api/v4/user
+            user-name-attribute: id
+            authorization-uri: https://gitlab.com/oauth/authorize
+            token-uri: https://gitlab.com/oauth/token
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+management:
+  server:
+    port: 8081
+  endpoint:
+    shutdown:
+      enabled: true
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+    health:
+      probes:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - shutdown
+          - metrics
+          - env
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-cloud-platform: kubernetes
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+server:
+  shutdown: graceful

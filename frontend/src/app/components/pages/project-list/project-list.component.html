@@ -1,0 +1,110 @@
+<div class="container" style="margin-top: 2em">
+  <div
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2em;
+      position: relative;
+    "
+  >
+    <h1 style="flex-grow: 1; text-align: center"><u>Project List</u></h1>
+    <button
+      type="button"
+      class="btn btn-primary"
+      style="position: absolute; right: 0"
+      (click)="addProject()"
+    >
+      <i class="bi-plus-circle"></i> NEW PROJECT
+    </button>
+  </div>
+  <h3><u>MD-CPPS Projects</u></h3>
+  <br />
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="name-column">Name</th>
+        <th class="description-column">Description</th>
+        <th>Version</th>
+        <th><i class="bi-person-circle"></i></th>
+        <th>Workspace #</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let project of mdCppsProjects">
+        <td
+          class="name-column"
+          (click)="viewProject(project.id)"
+          style="cursor: pointer; color: blue; text-decoration: underline"
+        >
+          {{ project.details.name }}
+        </td>
+        <td class="description-column">{{ project.details.description }}</td>
+        <td>{{ project.details.version }}</td>
+        <td>{{ project.userCount }}</td>
+        <td>{{ project.workspaceCount }}</td>
+        <td>
+          <div *ngIf="project.hasAdmin">
+            <button
+              class="btn btn-sm btn-warning"
+              style="margin-right: 0.5em"
+              (click)="editProject(project.id)"
+            >
+              <i class="bi-pencil-fill"></i>
+            </button>
+            <button
+              class="btn btn-sm btn-danger"
+              style="margin-right: 0.5em"
+              (click)="deleteProject(project.id)"
+            >
+              <i class="bi-trash-fill"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+  <hr />
+  <h3><u>Demo Projects</u></h3>
+  <br />
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="name-column">Name</th>
+        <th class="description-column">Description</th>
+        <th>Version</th>
+        <th><i class="bi-person-circle"></i></th>
+        <th>Workspace #</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let project of demoProjects">
+        <td
+          class="name-column"
+          (click)="viewProject(project.id)"
+          style="cursor: pointer; color: blue; text-decoration: underline"
+        >
+          {{ project.details.name }}
+        </td>
+        <td class="description-column">{{ project.details.description }}</td>
+        <td>{{ project.details.version }}</td>
+        <td>{{ project.userCount }}</td>
+        <td>{{ project.workspaceCount }}</td>
+        <td>
+          <div *ngIf="project.hasAdmin">
+            <button
+              class="btn btn-sm btn-danger"
+              style="margin-right: 0.5em"
+              (click)="deleteProject(project.id)"
+            >
+              <i class="bi-trash-fill"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,85 @@
+# TEMPORARY FILE
+stages:
+  - consolidate-common_model
+  - generate-views
+  - compare-views
+  - build
+
+consolidate-common_model:
+  stage: consolidate-common_model
+  resource_group: this_option_comes_handy_when_pushing
+  image: pixelgroup/docker-java-git:17.0.2-jdk
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+      changes:
+        - '*_workspace/*.{cg,ccg}'
+
+  before_script:
+    - git config --global user.name "CI Bot"
+    - git config --global user.email "cipipeline@example.com"
+    - git config --global --add safe.directory '*'
+    - git remote set-url --push origin "https://$CI_COMMITTER_USER_AND_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git"
+
+  script:
+    - git pull --rebase origin master
+    - java -jar mdmcpps-cli.jar unify-attributes ./
+
+    - git diff --quiet && git diff --staged --quiet || git commit -am 'Consolidate common model and unify attributes.'
+    - git push origin HEAD:master
+
+generate-views:
+  stage: generate-views
+  resource_group: this_option_comes_handy_when_pushing
+  image: pixelgroup/docker-java-git:17.0.2-jdk
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+      changes:
+        - common_workspace/*.ppr # ... or whatever your file extension is
+
+  before_script:
+    - git config --global user.name "CI Bot"
+    - git config --global user.email "cipipeline@example.com"
+    - git config --global --add safe.directory '*'
+    - git remote set-url --push origin "https://$CI_COMMITTER_USER_AND_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git"
+
+  script:
+    - git pull --rebase origin master
+    - java -jar mdmcpps-cli.jar domain generate-views ./
+
+    - git diff --quiet && git diff --staged --quiet || git commit -am 'Generate view files for domains.'
+    - git push origin HEAD:master
+
+compare-views:
+  stage: compare-views
+  resource_group: this_option_comes_handy_when_pushing
+  image: pixelgroup/docker-java-git:17.0.2-jdk
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - '*_workspace/*-gen.ppr'
+  before_script:
+    - git config --global user.name "CI Bot"
+    - git config --global user.email "cipipeline@example.com"
+    - git config --global --add safe.directory '*'
+    - git remote set-url --push origin "https://$CI_COMMITTER_USER_AND_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git"
+
+  script:
+    #- git pull --rebase origin $CI_COMMIT_REF_NAME
+    - java -jar mdmcpps-cli.jar domain compare-views ./
+    - echo "$CI_COMMIT_REF_NAME"
+
+    - git diff --quiet && git diff --staged --quiet || git commit -am 'Compare domains view files to common view and create diff files.'
+    - git push origin HEAD:$CI_COMMIT_REF_NAME
+
+build:
+  stage: build
+  resource_group: this_option_comes_handy_when_pushing
+  image: neo4j:latest
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+      changes:
+        - common_workspace/*.ppr
+  script:
+    - java -jar mdmcpps-cli.jar export-graph --projectName $CI_PROJECT_NAME --branchName $CI_COMMIT_REF_NAME ./
+    - ls -la
+    - cat mdeg-export.cql | cypher-shell -u neo4j -p CYchRr6yn9ARNwhQsyBwUGAjFzGWdQvNTpoUBY1tWk0 -a neo4j+s://f665ff49.databases.neo4j.io --format plain

@@ -1,0 +1,15 @@
+<h1>PAGE 2</h1>
+<br />
+<button
+  (click)="
+    routingService.navigateToComponent('home-page', { previous: 'page-2' })
+  "
+>
+  HOME PAGE
+</button>
+<br />
+<button
+  (click)="routingService.navigateToComponent('page-1', { previous: 'page-2' })"
+>
+  PAGE 1
+</button>

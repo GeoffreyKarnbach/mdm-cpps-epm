@@ -1,0 +1,47 @@
+<div *ngIf="targetComponent === 'login-page'">
+  <app-login [queryParams]="targetQueryParams"></app-login>
+</div>
+
+<div *ngIf="targetComponent !== 'login-page'" class="container-fluid">
+  <div class="row">
+    <div
+      class="col-2"
+      style="position: fixed; height: 100vh; left: 0; width: 15%"
+    >
+      <app-sidebar></app-sidebar>
+    </div>
+
+    <div class="col-10" style="margin-left: 15%">
+      <app-error-banner></app-error-banner>
+      <div *ngIf="targetComponent === 'create-edit-project'">
+        <app-create-edit-project
+          [queryParams]="targetQueryParams"
+        ></app-create-edit-project>
+      </div>
+      <div *ngIf="targetComponent === 'project-list'">
+        <app-project-list [queryParams]="targetQueryParams"></app-project-list>
+      </div>
+      <div *ngIf="targetComponent === 'project-view'">
+        <app-project-view [queryParams]="targetQueryParams"></app-project-view>
+      </div>
+      <div *ngIf="targetComponent === 'home-page'">
+        <app-home-page [queryParams]="targetQueryParams"></app-home-page>
+      </div>
+      <div *ngIf="targetComponent === 'page-1'">
+        <app-page-1 [queryParams]="targetQueryParams"></app-page-1>
+      </div>
+      <div *ngIf="targetComponent === 'page-2'">
+        <app-page-2 [queryParams]="targetQueryParams"></app-page-2>
+      </div>
+      <div *ngIf="targetComponent === 'project-type-selection'">
+        <app-project-type-selection></app-project-type-selection>
+      </div>
+      <div *ngIf="targetComponent === 'create-demo-project'">
+        <app-create-demo-project></app-create-demo-project>
+      </div>
+      <div *ngIf="targetComponent === 'import-project'">
+        <app-import-project></app-import-project>
+      </div>
+    </div>
+  </div>
+</div>

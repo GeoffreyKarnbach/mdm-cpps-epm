@@ -1,0 +1,126 @@
+{
+  "name": "bachelorarbeit",
+  "displayName": "BachelorArbeit",
+  "description": "BachelorArbeit",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:projectView",
+    "onCommand:bachelorarbeit.showUserCreateEditPanel",
+    "onCommand:bachelorarbeit.triggerUpdateUserList",
+    "onCommand:bachelorarbeit.showDomainWorkspaceCreateEditPanel",
+    "onCommand:bachelorarbeit.showWebview"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "bachelorarbeit.helloWorld",
+        "title": "Hello World"
+      },
+      {
+        "command": "bachelorarbeit.showUserCreateEditPanel",
+        "title": "Show CPPS User Create / Edit Panel"
+      },
+      {
+        "command": "bachelorarbeit.triggerUpdateUserList",
+        "title": "Trigger Update on User List UI"
+      },
+      {
+        "command": "bachelorarbeit.showDomainWorkspaceCreateEditPanel",
+        "title": "Show Domain Workspace Create / Edit Panel"
+      },
+      {
+        "command": "bachelorarbeit.triggerUpdateDomainWorkspaceList",
+        "title": "Trigger Update on Domain Workspace List UI"
+      },
+      {
+        "command": "bachelorarbeit.showWebview",
+        "title": "Show Webview"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "gitlabContainer",
+          "title": "Gitlab",
+          "icon": "assets/gitlab.svg"
+        },
+        {
+          "id": "jiraContainer",
+          "title": "Jira",
+          "icon": "assets/jira.svg"
+        },
+        {
+          "id": "cppsProjectContainer",
+          "title": "CPPS Project",
+          "icon": "assets/cpps.svg"
+        }
+      ]
+    },
+    "views": {
+      "gitlabContainer": [
+        {
+          "id": "gitlabView",
+          "name": "Gitlab"
+        }
+      ],
+      "jiraContainer": [
+        {
+          "id": "jiraView",
+          "name": "Jira"
+        }
+      ],
+      "cppsProjectContainer": [
+        {
+          "id": "projectView",
+          "name": "Project",
+          "type": "webview"
+        },
+        {
+          "id": "commonWorkspaceView",
+          "name": "Common Workspace",
+          "type": "webview"
+        },
+        {
+          "id": "domainWorkspaceView",
+          "name": "Domain Workspace",
+          "type": "webview"
+        },
+        {
+          "id": "userView",
+          "name": "Users",
+          "type": "webview"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@types/uuid": "^10.0.0",
+    "@types/vscode": "^1.92.0",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.11.0",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "uuid": "^10.0.0"
+  }
+}

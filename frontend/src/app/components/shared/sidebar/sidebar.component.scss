@@ -1,0 +1,47 @@
+.user-container {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info {
+  margin-top: 2em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-info img {
+  width: 50px; /* Adjust avatar size */
+  height: 50px;
+}
+
+.user-info span {
+  margin: 0;
+  word-break: break-all; /* Allow breaking long words */
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 10px;
+  width: 100%; /* Ensure the action buttons are spread across the container width */
+}
+
+.navigation-buttons button {
+  margin-left: 5px;
+}
+
+.project-list-btn {
+  width: calc(100% - 20px); /* Adjust to fit the container with some padding */
+  margin: 10px; /* Space around the button */
+  text-align: center;
+  /* Optional styles for button appearance */
+}
+
+.navigation-items {
+  padding-top: 4em;
+}

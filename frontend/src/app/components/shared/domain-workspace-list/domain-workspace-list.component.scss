@@ -1,0 +1,20 @@
+.separator {
+  border: none;
+  border-top: 10px solid black; /* Farbe und Dicke der Trennlinie */
+  margin: 1em 0; /* Abstand oben und unten */
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Optional: Platzierung des Buttons am rechten Rand */
+  margin-bottom: 1em; /* Optional: Abstand nach unten */
+}
+
+.header-container h5 {
+  margin: 0; /* Entfernt den Standardabstand des h5-Elements */
+}
+
+.header-container button {
+  margin-left: 1em; /* Optional: Abstand zwischen h5 und Button */
+}

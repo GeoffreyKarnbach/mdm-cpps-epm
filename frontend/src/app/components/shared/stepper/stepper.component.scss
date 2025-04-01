@@ -1,0 +1,65 @@
+.stepper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .stepper-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    position: relative;
+
+    .stepper-item {
+      text-align: center;
+      cursor: pointer;
+      padding: 1rem;
+      flex-grow: 1;
+      position: relative;
+
+      .step-number {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .step-name {
+        font-size: 1rem;
+        margin-top: 0.5rem;
+      }
+
+      &.active .step-number,
+      &.active .step-name {
+        color: #007bff; /* Active step color */
+      }
+
+      &.completed {
+        color: green;
+      }
+
+      /* Add line between items */
+      &:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        bottom: 50%;
+        left: calc(100% - 1em);
+        width: 3em; /* Adjust this to make the line as long as needed */
+        height: 2px; /* Line thickness */
+        background-color: #007bff; /* Line color */
+        transform: translateY(50%);
+        z-index: -1; /* Ensure line appears behind the items */
+      }
+    }
+  }
+
+  .stepper-body {
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    min-height: 300px;
+  }
+
+  .stepper-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
+}

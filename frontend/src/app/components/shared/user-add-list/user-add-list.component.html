@@ -1,0 +1,134 @@
+<div class="row">
+  <div style="display: flex; align-items: center; width: 100%">
+    <div
+      class="form-group"
+      style="display: flex; align-items: center; width: 47%"
+    >
+      <label for="gitlabId" style="margin-right: 1em; width: 20%"
+        >Gitlab Username:</label
+      >
+      <input
+        type="text"
+        id="gitlabId"
+        name="gitlabId"
+        placeholder="Gitlab Username"
+        class="form-control"
+        [(ngModel)]="gitlabUsernameSubstr"
+        [attr.list]="'usernameSearch'"
+        (input)="updateRecommendations()"
+        autocomplete="off"
+        style="width: 80%"
+        required
+      />
+      <datalist [attr.id]="'usernameSearch'">
+        <ng-container *ngFor="let user of matchingUsers">
+          <option
+            [value]="user.gitlabUsername"
+            [label]="user.gitlabUsername"
+          ></option>
+        </ng-container>
+      </datalist>
+    </div>
+    <p
+      style="
+        width: 6%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1em;
+      "
+    >
+      <span style="border: 2px solid black; border-radius: 34%; padding: 0.25em"
+        >OR
+      </span>
+    </p>
+    <div
+      class="form-group"
+      style="display: flex; align-items: center; width: 47%"
+    >
+      <label for="name" style="margin-right: 1em">GitLab ID:</label>
+      <input
+        type="number"
+        id="name"
+        name="name"
+        class="form-control"
+        [(ngModel)]="gitlabIdToAdd"
+        style="flex: 1; margin-right: 1em"
+      />
+      <button class="btn btn-primary" (click)="onAddUser()" style="width: auto">
+        <i class="bi-plus-circle"></i>
+        Add
+      </button>
+    </div>
+  </div>
+  <h5 style="margin-top: 2em; margin-bottom: 1em"><u>Project User List:</u></h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Gitlab ID</th>
+        <th>Gitlab Username</th>
+        <th>Requires Login?</th>
+        <th>IsReviewer</th>
+        <th>IsAdmin</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of addedUsersList">
+        <td>
+          <img
+            [src]="user.user.avatarUrl"
+            alt="Avatar"
+            style="width: 40px; height: 40px; border-radius: 50%"
+          />
+        </td>
+        <td>{{ user.user.gitlabId }}</td>
+        <td>{{ user.user.gitlabUsername }}</td>
+        <td>{{ user.user.email !== "" ? "No" : "Yes" }}</td>
+        <td>
+          <input
+            type="checkbox"
+            [(ngModel)]="user.isReviewer"
+            [disabled]="
+              !isAdmin ||
+              (cppsProject.externalToolsDetails.creatorGitlabUserId != 0 &&
+                cppsProject.externalToolsDetails.creatorGitlabUserId ==
+                  user.user.gitlabId)
+            "
+          />
+        </td>
+        <td>
+          <input
+            type="checkbox"
+            [(ngModel)]="user.isAdmin"
+            [disabled]="
+              currentUserId === user.user.id ||
+              (cppsProject.externalToolsDetails.creatorGitlabUserId != 0 &&
+                cppsProject.externalToolsDetails.creatorGitlabUserId !=
+                  currentUser.gitlabId)
+            "
+          />
+        </td>
+        <td>
+          <button
+            class="btn btn-sm btn-danger"
+            (click)="removeUser(user.user.id)"
+            *ngIf="currentUserId !== user.user.id"
+          >
+            <i class="bi-trash-fill"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div
+    style="display: flex; justify-content: center; margin-top: 1em"
+    *ngIf="mode === 'create'"
+  >
+    <button class="btn btn-primary" (click)="onSubmit()" style="width: 35%">
+      Continue with common workspace
+    </button>
+  </div>
+</div>

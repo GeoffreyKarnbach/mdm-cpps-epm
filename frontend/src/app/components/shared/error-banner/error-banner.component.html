@@ -1,0 +1,74 @@
+<div
+  class="container"
+  style="
+    border: 1px solid red;
+    color: red;
+    width: 95%;
+    margin-top: 1em;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  "
+  *ngIf="showBanner"
+>
+  <div
+    style="
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    "
+  >
+    <p style="margin: 0">
+      <strong>Error: </strong>
+      <span [innerHTML]="message" style="white-space: pre-wrap"></span>
+    </p>
+    <button type="button" class="btn-icon" (click)="closeBanner()">
+      <i class="bi-x-circle"></i>
+    </button>
+  </div>
+  <div class="progress-bar" [style.width.%]="progress"></div>
+</div>
+
+<div
+  class="container"
+  style="
+    border: 1px solid green;
+    color: green;
+    width: 95%;
+    margin-top: 1em;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  "
+  *ngIf="showSuccessBanner"
+>
+  <div
+    style="
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    "
+  >
+    <p style="margin: 0">
+      <strong>Success: </strong>
+      <span [innerHTML]="successMessage" style="white-space: pre-wrap"></span>
+    </p>
+    <button
+      type="button"
+      class="btn-icon btn-icon-success"
+      (click)="closeBanner()"
+    >
+      <i class="bi-x-circle"></i>
+    </button>
+  </div>
+  <div
+    class="progress-bar progress-bar-success"
+    [style.width.%]="progress"
+  ></div>
+</div>

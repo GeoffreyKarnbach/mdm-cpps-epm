@@ -1,0 +1,98 @@
+<h5>Common Workspace</h5>
+<div class="row">
+  <div
+    class="form-group"
+    style="display: flex; align-items: center; width: 100%; margin-bottom: 1em"
+  >
+    <label for="name" style="margin-right: 1em">Name:</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      class="form-control"
+      [(ngModel)]="commonWorkspace.name"
+      [disabled]="gitlabHasBeenInitiatedAlready"
+    />
+  </div>
+
+  <div
+    class="form-group"
+    style="display: flex; align-items: center; width: 100%"
+  >
+    <label for="gitlabId" style="margin-right: 1em">Username:</label>
+
+    <input
+      type="text"
+      id="gitlabId"
+      name="gitlabId"
+      placeholder="Gitlab Username"
+      class="form-control"
+      [(ngModel)]="gitlabUsername"
+      [attr.list]="getSuggestionComponentId()"
+      (input)="updateRecommendations()"
+      autocomplete="off"
+      style="width: 87% !important"
+      required
+    />
+    <datalist [attr.id]="getSuggestionComponentId()">
+      <ng-container *ngFor="let user of matchingUsers">
+        <option
+          [value]="user.gitlabUsername"
+          [label]="user.gitlabUsername"
+        ></option>
+      </ng-container>
+    </datalist>
+    <button
+      class="btn btn-primary"
+      style="margin-left: 1em"
+      (click)="onAddUser()"
+    >
+      <i class="bi-plus-circle"></i> Add
+    </button>
+  </div>
+  <h5 style="margin-top: 1em; margin-bottom: 1em">
+    <u>Common Workspace User List:</u>
+  </h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Gitlab ID</th>
+        <th>Gitlab Username</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of commonWorkspace.users">
+        <td>
+          <img
+            [src]="user.avatarUrl"
+            alt="Avatar"
+            style="width: 40px; height: 40px; border-radius: 50%"
+          />
+        </td>
+        <td>{{ user.gitlabId }}</td>
+        <td>{{ user.gitlabUsername }}</td>
+        <td>
+          <button
+            class="btn btn-sm btn-danger"
+            (click)="removeUser(user.id)"
+            *ngIf="user.id !== currentUser.id"
+          >
+            <i class="bi-trash-fill"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br /><br />
+</div>
+
+<div
+  style="display: flex; justify-content: center; margin-top: 1em"
+  *ngIf="mode === 'create'"
+>
+  <button class="btn btn-primary" (click)="save()" style="width: 35%">
+    Continue with domain workspaces
+  </button>
+</div>

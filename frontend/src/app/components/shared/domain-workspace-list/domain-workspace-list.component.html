@@ -1,0 +1,34 @@
+<div class="header-container">
+  <h5>Domain Workspaces</h5>
+  <button class="btn btn-primary" (click)="addDomainWorkspace()">
+    <i class="bi-plus-circle"></i>
+    Add Workspace
+  </button>
+</div>
+
+<div *ngFor="let domainWorkspace of domainWorkspaces; let i = index">
+  <hr class="separator" />
+  <app-domain-workspace
+    [availableUsers]="availableUsers"
+    [domainWorkspace]="domainWorkspace"
+    [gitlabHasBeenInitiatedAlready]="gitlabHasBeenInitiatedAlready"
+    [isNewWorkspace]="domainWorkspacesAreNew[i]"
+    [idx]="i"
+    [mode]="mode"
+    (delete)="removeDomainWorkspace($event)"
+  ></app-domain-workspace>
+</div>
+
+<div
+  style="display: flex; justify-content: center; margin-top: 1em"
+  *ngIf="mode === 'create'"
+>
+  <button
+    *ngIf="domainWorkspaces.length > 0"
+    class="btn btn-primary"
+    (click)="goToNextStep()"
+    style="width: 35%"
+  >
+    Continue with external tools
+  </button>
+</div>

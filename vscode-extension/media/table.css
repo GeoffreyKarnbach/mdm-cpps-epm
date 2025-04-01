@@ -1,0 +1,18 @@
+table {
+    width: 100%;
+    border-collapse: collapse; /* Entfernt die doppelten Ränder zwischen den Zellen */
+}
+
+th, td {
+    border: 1px solid white; /* Fügt eine schwarze Linie um jede Zelle hinzu */
+    padding: 8px; /* Fügt etwas Abstand innerhalb der Zellen hinzu */
+    text-align: left; /* Richtet den Text linksbündig aus */
+}
+
+.actions {
+    /* Put the elements next to each other, keep the height of the cell */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}

@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="form-group">
+    <label for="name">Project name</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      class="form-control"
+      [(ngModel)]="projectDetails.name"
+      [disabled]="mode == 'edit'"
+    />
+  </div>
+  <br />
+  <div class="form-group">
+    <label for="description">Project description</label>
+    <textarea
+      id="description"
+      name="description"
+      class="form-control"
+      [(ngModel)]="projectDetails.description"
+    ></textarea>
+  </div>
+  <br />
+  <div class="form-group">
+    <label for="version">Project version</label>
+    <input
+      type="text"
+      id="version"
+      name="version"
+      class="form-control"
+      [(ngModel)]="projectDetails.version"
+      [disabled]="mode == 'create'"
+    />
+  </div>
+  <br />
+  <div
+    style="display: flex; justify-content: center; margin-top: 1em"
+    *ngIf="mode === 'create'"
+  >
+    <button class="btn btn-primary" (click)="onSubmit()" style="width: 35%">
+      Continue with user list
+    </button>
+  </div>
+</div>

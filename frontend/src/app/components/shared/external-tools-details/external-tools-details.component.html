@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="form-group">
+    <h5>GitLab Root Group:</h5>
+    <select
+      id="rootGroupId"
+      name="rootGroupId"
+      class="form-control"
+      [(ngModel)]="externalToolsDetails.rootGroupId"
+      [disabled]="mode === 'edit'"
+    >
+      <option *ngFor="let group of groups" [value]="group.id">
+        {{ group.name }}
+      </option>
+    </select>
+  </div>
+  <caption class="text-muted">
+    Make sure to select a root group with
+    <strong>no important content</strong>
+    (no subgroups, no users added, no projects created). Any data will be
+    automatically removed when generating the project. Ideally, create a new
+    gitlab root group for this purpose.
+  </caption>
+  <br />
+  <h5>Merge request templates:</h5>
+  <app-tab-group
+    [templateItem]="externalToolsDetails.mergeRequestTemplates"
+  ></app-tab-group>
+  <h5>Issue templates:</h5>
+  <app-tab-group
+    [templateItem]="externalToolsDetails.issueTemplates"
+  ></app-tab-group>
+  <div
+    style="display: flex; justify-content: center; margin-top: 1em"
+    *ngIf="mode === 'create' && !isDemoProject"
+  >
+    <button class="btn btn-primary" (click)="next()" style="width: 35%">
+      <i class="bi-save"></i>
+      Save CPPS Project
+    </button>
+  </div>
+
+  <div
+    style="display: flex; justify-content: center; margin-top: 1em"
+    *ngIf="mode === 'create' && isDemoProject"
+  >
+    <button class="btn btn-primary" (click)="next()" style="width: 35%">
+      Continue with demo project config
+    </button>
+  </div>
+</div>

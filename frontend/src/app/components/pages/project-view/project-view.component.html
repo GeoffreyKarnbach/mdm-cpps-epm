@@ -1,0 +1,305 @@
+<div class="container" style="margin-top: 2em">
+  <h1 class="text-center">
+    <u
+      >{{ cppsProject.details.demo ? "Demo " : "MD-CPPS" }} Project:
+      {{ cppsProject.details.name }}</u
+    >
+  </h1>
+  <br />
+  <div class="d-flex justify-content-end">
+    <p *ngIf="downloadUrlInfo != ''" style="margin-right: 1em">
+      {{ downloadUrlInfo }}
+    </p>
+    <button class="btn btn-primary full-width" (click)="copyJSONExportURL()">
+      <i class="bi-cloud-download"></i>
+      EXPORT TO JSON
+    </button>
+    <button
+      class="btn btn-secondary full-width"
+      (click)="copyAnonymizedJSONExportURL()"
+      style="margin-left: 1em"
+    >
+      <i class="bi-cloud-download-fill"></i>
+      EXPORT ANONYMIZED JSON
+    </button>
+    <button
+      class="btn btn-warning full-width"
+      (click)="performFileConsistencyCheck()"
+      style="margin-left: 1em"
+      *ngIf="
+        isOwnerViewing &&
+        cppsProject.externalToolsDetails.gitlabHasBeenGenerated
+      "
+    >
+      <i class="bi-check2-all"></i>
+      VERIFY FILE CONSISTENCY
+    </button>
+    <button
+      class="btn btn-warning full-width"
+      (click)="editProject()"
+      style="margin-left: 1em"
+      *ngIf="isAdminViewing && !cppsProject.details.demo"
+    >
+      <i class="bi-pencil"></i>
+      EDIT PROJECT
+    </button>
+    <button
+      class="btn btn-info full-width"
+      (click)="resetAndBuildProjectInfrastructure()"
+      style="margin-left: 1em"
+      *ngIf="
+        isOwnerViewing &&
+        !cppsProject.externalToolsDetails.gitlabHasBeenGenerated
+      "
+    >
+      <i class="bi-wrench"></i>
+      RESET AND BUILD INFRASTRUCTURE
+    </button>
+    <button
+      class="btn btn-info full-width"
+      (click)="editProjectInfrastructure()"
+      style="margin-left: 1em"
+      *ngIf="
+        isOwnerViewing &&
+        cppsProject.externalToolsDetails.gitlabHasBeenGenerated &&
+        !cppsProject.details.demo
+      "
+    >
+      <i class="bi-wrench"></i>
+      UPDATE INFRASTRUCTURE
+    </button>
+  </div>
+  <br />
+  <div
+    style="
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 1em;
+      margin-bottom: 2em;
+    "
+    *ngIf="showBuildProgress"
+  >
+    <h3>
+      <u
+        >{{
+          cppsProject.externalToolsDetails.gitlabHasBeenGenerated
+            ? "Update"
+            : "Build"
+        }}
+        process</u
+      >
+    </h3>
+    <div>
+      <div *ngIf="projectResetCompleted" style="color: green">
+        <i class="bi-check-circle-fill"></i>
+        Gitlab project reset completed successfully!
+      </div>
+      <div *ngIf="projectResetFailure" style="color: red">
+        <i class="bi-x-circle-fill"></i>
+        Gitlab project reset failed!
+      </div>
+      <div *ngIf="projectResetInProgress">
+        <div
+          class="spinner-border text-primary"
+          role="status"
+          style="width: 1em; height: 1em"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        Resetting Gitlab project
+      </div>
+    </div>
+    <hr />
+    <div *ngFor="let step of buildSteps" style="margin-top: 1em">
+      <div *ngIf="step.inProgress">
+        <div
+          class="spinner-border text-primary"
+          role="status"
+          style="width: 1em; height: 1em"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        {{ step.name }}
+      </div>
+      <div *ngIf="step.completed">
+        <i class="bi-check-circle-fill" style="color: green"></i>
+        {{ step.name }}
+      </div>
+      <div *ngIf="!step.inProgress && !step.completed && !step.failure">
+        <i class="bi-circle"></i> {{ step.name }}
+      </div>
+      <div *ngIf="step.failure">
+        <i class="bi-x-circle-fill" style="color: red"></i>
+        {{ step.name }}
+      </div>
+    </div>
+    <p *ngIf="buildCompleted" style="color: green; margin-top: 1em">
+      <i class="bi-check-circle-fill"></i> Build completed successfully!
+      <br />
+    </p>
+  </div>
+
+  <h3><u>Project details</u></h3>
+  <div>
+    <p><b>Project name:</b> {{ cppsProject.details.name }}</p>
+    <p><b>Project description:</b> {{ cppsProject.details.description }}</p>
+    <p><b>Project version:</b> {{ cppsProject.details.version }}</p>
+    <p><b>Is demo project:</b> {{ cppsProject.details.demo }}</p>
+  </div>
+  <br />
+  <h3><u>Project users</u></h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Gitlab ID</th>
+        <th>Gitlab Username</th>
+        <th>Requires Login?</th>
+        <th>IsReviewer</th>
+        <th>IsAdmin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of cppsProject.users">
+        <td>
+          <img
+            [src]="user.user.avatarUrl"
+            alt="Avatar"
+            style="width: 40px; height: 40px; border-radius: 50%"
+          />
+        </td>
+        <td>{{ user.user.gitlabId }}</td>
+        <td>{{ user.user.gitlabUsername }}</td>
+        <td>{{ user.user.email !== "" ? "No" : "Yes" }}</td>
+        <td>
+          <input type="checkbox" [(ngModel)]="user.isReviewer" disabled />
+        </td>
+        <td>
+          <input type="checkbox" [(ngModel)]="user.isAdmin" disabled />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+  <h3><u>Common Workspace</u></h3>
+  <div>
+    <p><b>Name:</b> {{ cppsProject.commonWorkspace.name }}</p>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Gitlab ID</th>
+        <th>Gitlab Username</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of cppsProject.commonWorkspace.users">
+        <td>
+          <img
+            [src]="user.avatarUrl"
+            alt="Avatar"
+            style="width: 40px; height: 40px; border-radius: 50%"
+          />
+        </td>
+        <td>{{ user.gitlabId }}</td>
+        <td>{{ user.gitlabUsername }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+  <h3><u>Domain Workspaces</u></h3>
+  <div
+    *ngFor="let domainWorkspace of cppsProject.domainWorkspaces"
+    style="
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 1em;
+      margin-bottom: 1em;
+    "
+  >
+    <div><strong>Name:</strong> {{ domainWorkspace.name }}</div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Avatar</th>
+          <th>Gitlab ID</th>
+          <th>Gitlab Username</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of domainWorkspace.users">
+          <td>
+            <img
+              [src]="user.avatarUrl"
+              alt="Avatar"
+              style="width: 40px; height: 40px; border-radius: 50%"
+            />
+          </td>
+          <td>{{ user.gitlabId }}</td>
+          <td>{{ user.gitlabUsername }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br />
+  <h3><u>External Tools Details</u></h3>
+  <div>
+    <p>
+      <b>Root Group ID:</b> {{ cppsProject.externalToolsDetails.rootGroupId }}
+    </p>
+    <p>
+      <b>Gitlab URL:</b> {{ gitlabUrl }}
+      <button
+        class="btn btn-sm btn-primary"
+        style="margin-left: 0.5em"
+        (click)="copyGitlabUrlToClipboard()"
+      >
+        COPY TO CLIPBOARD
+      </button>
+    </p>
+    <p>
+      <b>Creator Gitlab User ID:</b>
+      {{ cppsProject.externalToolsDetails.creatorGitlabUserId }}
+    </p>
+    <p class="d-inline">
+      <b>Merge request templates:</b>
+    </p>
+    <button
+      class="btn btn-sm btn-primary"
+      style="margin-left: 0.5em"
+      (click)="toggleMR()"
+    >
+      <i class="{{ showMR ? 'bi-eye-slash' : 'bi-eye' }}"></i>
+    </button>
+    <app-tab-group
+      [templateItem]="cppsProject.externalToolsDetails.mergeRequestTemplates"
+      [isReadOnly]="true"
+      *ngIf="showMR"
+    ></app-tab-group>
+    <br />
+    <p class="d-inline">
+      <b>Issue templates:</b>
+    </p>
+    <button
+      class="btn btn-sm btn-primary"
+      style="margin-left: 0.5em"
+      (click)="toggleIssue()"
+    >
+      <i class="{{ showIssue ? 'bi-eye-slash' : 'bi-eye' }}"></i>
+    </button>
+    <app-tab-group
+      [templateItem]="cppsProject.externalToolsDetails.issueTemplates"
+      [isReadOnly]="true"
+      *ngIf="showIssue"
+    ></app-tab-group>
+  </div>
+  <br />
+</div>
+
+<div *ngIf="loading" class="loading-overlay text-center">
+  <div class="spinner-border text-primary" role="status" *ngIf="loadingSpinner">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <p *ngIf="loadingSpinner">Processing, please hold on...</p>
+</div>

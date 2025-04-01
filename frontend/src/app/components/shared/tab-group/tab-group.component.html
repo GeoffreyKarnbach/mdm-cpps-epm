@@ -1,0 +1,52 @@
+<!-- tabs.component.html -->
+<ul class="nav nav-tabs">
+  <li
+    class="nav-item d-flex align-items-center"
+    *ngFor="let tab of templateItem; let i = index"
+  >
+    <a class="nav-link" [class.active]="currentTab === i" (click)="setTab(i)">
+      {{ tab.name.length == 0 ? "New Item" : tab.name }}
+    </a>
+  </li>
+
+  <li class="nav-item" *ngIf="!isReadOnly">
+    <a class="nav-link" href="#" (click)="addTab()"
+      ><i class="bi-plus-circle"></i
+    ></a>
+  </li>
+</ul>
+
+<div class="tab-content mt-3">
+  <div
+    *ngFor="let tab of templateItem; let i = index"
+    [hidden]="currentTab !== i"
+  >
+    <div class="tab-pane">
+      <label for="name{{ i }}">Name:</label>
+      <input
+        id="name{{ i }}"
+        class="form-control"
+        [(ngModel)]="tab.name"
+        [disabled]="isReadOnly"
+      />
+      <label for="content{{ i }}">Content:</label>
+      <textarea
+        id="content{{ i }}"
+        class="form-control"
+        [(ngModel)]="tab.content"
+        [disabled]="isReadOnly"
+        rows="5"
+      >
+      </textarea>
+      <div
+        class="d-flex justify-content-end"
+        style="margin-top: 0.5em"
+        *ngIf="!isReadOnly"
+      >
+        <button class="btn btn-danger" (click)="deleteTab(i)">
+          <i class="bi-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
